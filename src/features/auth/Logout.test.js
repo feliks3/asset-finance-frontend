@@ -19,7 +19,7 @@ describe('Logout Component', () => {
       </Provider>
     );
 
-    expect(screen.getByText(/注销/i)).toBeInTheDocument();
+    expect(screen.getByText(/Logout/i)).toBeInTheDocument();
   });
 
   test('calls logout on button click', () => {
@@ -31,7 +31,7 @@ describe('Logout Component', () => {
       </Provider>
     );
 
-    const logoutButton = screen.getByText(/注销/i);
+    const logoutButton = screen.getByText(/Logout/i);
     fireEvent.click(logoutButton);
 
     expect(store.getActions()).toContainEqual({ type: 'auth/logout' });

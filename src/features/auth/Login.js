@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { login } from './authSlice';
+import { loginUser } from '../../services/api';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 /**
@@ -16,6 +16,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   /**
    * Handles the form submission for user login.
@@ -26,17 +27,12 @@ const Login = () => {
    */
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setError('');
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_API_URL}/auth/login`,
-        {
-          email,
-          password,
-        }
-      );
-      const token = response.data.token;
-
-      localStorage.setItem('token', token);
+      await loginUser({
+        email,
+        password,
+      });
 
       dispatch(
         login({ user: { email }, roles: ['user'], permissions: ['read'] })
@@ -45,11 +41,20 @@ const Login = () => {
       navigate('/');
     } catch (error) {
       console.error('Login failed:', error.response.data.message);
+      setError(
+        error.response.data.message || 'Login failed. Please try again.'
+      );
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      {error && (
+        <div className="alert alert-danger" role="alert">
+          {error}
+        </div>
+      )}{' '}
+      {/* 显示错误信息 */}
       <div className="mb-3">
         <label htmlFor="email" className="form-label">
           Email

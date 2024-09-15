@@ -29,7 +29,6 @@ export const fetchApplicationsThunk = createAsyncThunk(
       filter,
       comparison
     );
-    console.log('response', response);
     return {
       applications: response.applications.map((app) => ({
         id: app._id,
@@ -101,7 +100,6 @@ export const updateApplicationThunk = createAsyncThunk(
   'applications/updateApplication',
   async (application) => {
     const response = await updateExistingApplication(application);
-    console.log('response', response);
     return {
       id: response._id,
       name: response.name,

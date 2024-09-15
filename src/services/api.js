@@ -24,6 +24,22 @@ api.interceptors.request.use(
 );
 
 /**
+ * Register a user by sending registrationData to the backend API.
+ *
+ * @async
+ * @function
+ * @param {Object} registrationData - The user's register registrationData.
+ * @returns {Promise<Object>} The user data returned by the API.
+ */
+export const registerUser = async (registrationData) => {
+  const response = await api.post('/auth/register', registrationData);
+  const token = response.data.token;
+
+  localStorage.setItem('token', token);
+  return response.data;
+};
+
+/**
  * Logs in a user by sending credentials to the backend API.
  *
  * @async
@@ -33,6 +49,9 @@ api.interceptors.request.use(
  */
 export const loginUser = async (credentials) => {
   const response = await api.post('/auth/login', credentials);
+  const token = response.data.token;
+
+  localStorage.setItem('token', token);
   return response.data;
 };
 
@@ -89,7 +108,6 @@ export const addNewApplication = async (application) => {
  * @returns {Promise<string>} The ID of the deleted application.
  */
 export const deleteExistingApplication = async (id) => {
-  console.log('deleteExistingApplication id', id);
   await api.delete(`/applications/${id}`);
   return id;
 };
@@ -103,7 +121,6 @@ export const deleteExistingApplication = async (id) => {
  * @returns {Promise<Object>} The updated application data returned by the API.
  */
 export const updateExistingApplication = async (application) => {
-  console.log('application', application);
   const response = await api.put(
     `/applications/${application.id}`,
     application

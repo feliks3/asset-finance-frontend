@@ -19,7 +19,6 @@ const Logout = () => {
    * @function
    */
   const handleLogout = () => {
-    console.log('handle logout');
     localStorage.removeItem('token');
     dispatch(logout());
     navigate('/login');

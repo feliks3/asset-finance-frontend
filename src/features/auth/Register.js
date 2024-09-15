@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
 import { login } from './authSlice';
+import { registerUser } from '../../services/api';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 /**
@@ -27,16 +27,10 @@ const Register = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_API_URL}/auth/register`,
-        {
-          email,
-          password,
-        }
-      );
-      const token = response.data.token;
-
-      localStorage.setItem('token', token);
+      registerUser({
+        email,
+        password,
+      });
 
       dispatch(
         login({ user: { email }, roles: ['user'], permissions: ['read'] })

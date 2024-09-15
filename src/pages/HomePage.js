@@ -116,8 +116,8 @@ const HomePage = () => {
    * @async
    * @function
    */
-  const handleUpdateApplication = async () => {
-    await dispatch(updateApplicationThunk(editApp));
+  const handleUpdateApplication = async (updatedApp) => {
+    await dispatch(updateApplicationThunk(updatedApp));
     setEditApp(null);
     debouncedFetchApplications(searchTerm, filterField, comparisonOperator);
   };

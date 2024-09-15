@@ -19,8 +19,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
  */
 const App = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  console.log('app page');
-  console.log('isLoggedIn', isLoggedIn);
 
   return (
     <Router>

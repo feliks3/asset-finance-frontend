@@ -25,7 +25,7 @@ describe('Register Component', () => {
     expect(
       screen.getByPlaceholderText(/Enter your password/i)
     ).toBeInTheDocument();
-    expect(screen.getByText(/注册/i)).toBeInTheDocument();
+    expect(screen.getByText(/Register/i)).toBeInTheDocument();
   });
 
   test('calls handleSubmit on form submission', () => {
@@ -43,6 +43,6 @@ describe('Register Component', () => {
     fireEvent.change(screen.getByPlaceholderText(/Enter your password/i), {
       target: { value: 'password' },
     });
-    fireEvent.click(screen.getByText(/注册/i));
+    fireEvent.click(screen.getByText(/Register/i));
   });
 });

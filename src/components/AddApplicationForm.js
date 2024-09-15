@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 /**
  * Component for adding a new application.
@@ -10,6 +10,22 @@ import React from 'react';
  * @returns {JSX.Element} The rendered component.
  */
 const AddApplicationForm = ({ newApp, onAdd, setNewApp }) => {
+  const [errors, setErrors] = useState({});
+
+  /**
+   * Validates form fields.
+   */
+  const validate = () => {
+    const newErrors = {};
+    Object.keys(newApp).forEach((key) => {
+      if (!newApp[key]) {
+        newErrors[key] = `${key} is required.`;
+      }
+    });
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   /**
    * Handles form submission.
    *
@@ -17,7 +33,9 @@ const AddApplicationForm = ({ newApp, onAdd, setNewApp }) => {
    */
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAdd(e);
+    if (validate()) {
+      onAdd(e);
+    }
   };
 
   return (
@@ -32,6 +50,7 @@ const AddApplicationForm = ({ newApp, onAdd, setNewApp }) => {
             onChange={(e) => setNewApp({ ...newApp, name: e.target.value })}
             placeholder="Application Name"
           />
+          {errors.name && <small className="text-danger">{errors.name}</small>}
         </div>
         <div className="mb-3">
           <input
@@ -43,6 +62,9 @@ const AddApplicationForm = ({ newApp, onAdd, setNewApp }) => {
             }
             placeholder="Application Description"
           />
+          {errors.description && (
+            <small className="text-danger">{errors.description}</small>
+          )}
         </div>
         <div className="mb-3">
           <input
@@ -54,6 +76,9 @@ const AddApplicationForm = ({ newApp, onAdd, setNewApp }) => {
             }
             placeholder="Personal Details"
           />
+          {errors.personalDetails && (
+            <small className="text-danger">{errors.personalDetails}</small>
+          )}
         </div>
         <div className="mb-3">
           <input
@@ -63,6 +88,9 @@ const AddApplicationForm = ({ newApp, onAdd, setNewApp }) => {
             onChange={(e) => setNewApp({ ...newApp, income: e.target.value })}
             placeholder="Income"
           />
+          {errors.income && (
+            <small className="text-danger">{errors.income}</small>
+          )}
         </div>
         <div className="mb-3">
           <input
@@ -72,6 +100,9 @@ const AddApplicationForm = ({ newApp, onAdd, setNewApp }) => {
             onChange={(e) => setNewApp({ ...newApp, expenses: e.target.value })}
             placeholder="Expenses"
           />
+          {errors.expenses && (
+            <small className="text-danger">{errors.expenses}</small>
+          )}
         </div>
         <div className="mb-3">
           <input
@@ -81,6 +112,9 @@ const AddApplicationForm = ({ newApp, onAdd, setNewApp }) => {
             onChange={(e) => setNewApp({ ...newApp, assets: e.target.value })}
             placeholder="Assets"
           />
+          {errors.assets && (
+            <small className="text-danger">{errors.assets}</small>
+          )}
         </div>
         <div className="mb-3">
           <input
@@ -92,6 +126,9 @@ const AddApplicationForm = ({ newApp, onAdd, setNewApp }) => {
             }
             placeholder="Liabilities"
           />
+          {errors.liabilities && (
+            <small className="text-danger">{errors.liabilities}</small>
+          )}
         </div>
         <button type="submit" className="btn btn-success w-100">
           Add Application

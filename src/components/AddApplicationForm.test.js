@@ -7,13 +7,13 @@ describe('AddApplicationForm Component', () => {
   const mockOnAdd = jest.fn();
   const mockSetNewApp = jest.fn();
   const mockNewApp = {
-    name: '',
-    description: '',
-    personalDetails: '',
-    income: '',
-    expenses: '',
-    assets: '',
-    liabilities: '',
+    name: 'app name',
+    description: 'app description',
+    personalDetails: 'app details',
+    income: 100,
+    expenses: 200,
+    assets: 300,
+    liabilities: 400,
   };
 
   test('renders form fields correctly', () => {
